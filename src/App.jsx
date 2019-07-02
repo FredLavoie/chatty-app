@@ -1,9 +1,26 @@
 import React, {Component} from 'react';
+import ChatBar from './ChatBar.jsx';
+import MessageList from './MessageList.jsx';
+import Header from './Header.jsx';
+import messages from './messages.json';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = { messages };
+  }
+
   render() {
     return (
-      <h1>Hello React :)</h1>
+      <div className="container">
+
+        <Header />
+
+        <MessageList messages={this.state.messages}/>
+
+        <ChatBar />
+
+      </div>
     );
   }
 }
