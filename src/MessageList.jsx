@@ -9,8 +9,8 @@ class MessageList extends Component {
   }
 
   render() {
-  const allMessages = this.props.messages.map(item => (
-    <Message key={item.id} item={item} />
+  const allMessages = this.props.messages.map((item, index) => (
+    <Message key={index} item={item} />
   ));
     return (
       <main className="messages">
