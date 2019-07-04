@@ -24,7 +24,7 @@ class App extends Component {
 };
 
   componentDidMount() {
-    this.SocketServer.onopen = this.handleOnOpen;
+    this.SocketServer.onopen = this.handleOnOpen; // not sure why I need this at the moment
 
     this.SocketServer.onmessage = (event) => {
       let serverMessage = JSON.parse(event.data);
@@ -39,14 +39,56 @@ class App extends Component {
 
   addNewMessage = event => {
     if(event.key === 'Enter') {
-      const newMessage = { type: "incomingMessage", content: event.target.value, name:this.state.currentUser.name };
+      let newMessage = { type: "incomingMessage", content: event.target.value, name:this.state.currentUser.name };
       this.SocketServer.send(JSON.stringify(newMessage));
+      event.target.value = '';
     }
   }
 
   updateUser = event => {
-    let newUser = event.target.value;   
-    this.setState({ currentUser: {name: newUser}});
+    let oldUser = this.state.currentUser.name;
+
+    let newUser = event.target.value;
+    let num = 1;
+
+    const validator = (userValidate, num) => {
+      if (userValidate == '') {
+        userValidate = 'Anonymous' + num;
+        for (let user of this.state.messages) {
+          if (userValidate == user.name) {
+            console.log('Inside first loop, second if statement is true');
+            num += 1;
+            userValidate = 'Anonymous' + num;
+            console.log('num at this point is: ', num);
+            validator(userValidate, num);
+
+          }
+        }
+      } else if(/Anonymous/.test(userValidate)) {
+        console.log('Inside else if before the for loop');
+        
+        for (let user of this.state.messages) {
+          if (userValidate == user.name) {
+            let numRes = parseInt(user.name.substr(9));
+            num = numRes + 1;
+            userValidate = 'Anonymous' + num;
+            console.log(`Inside 'else if': ${userValidate}, ${num}`);
+            this.setState({ currentUser: {name: userValidate}});    
+            return userValidate;
+          }
+        }
+
+      }
+
+      return userValidate;
+    }
+    let validUser = validator(newUser, num);
+
+    let newMessage = { type: "incomingNotification", content: validUser, oldUser: oldUser };
+    this.SocketServer.send(JSON.stringify(newMessage));
+
+    event.target.value = validUser;
+    this.setState({ currentUser: {name: validUser}});
   }
 
   render() {

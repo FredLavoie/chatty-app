@@ -12,7 +12,7 @@ class ChatBar extends Component {
         <input className="chatbar-username" onBlur={this.props.updateUser} defaultValue={this.props.user} placeholder="Your Name (Optional)" />
         <input className="chatbar-message" onKeyPress={this.props.addNewMessage} placeholder="Type a message and hit ENTER" />
       </footer>
-    )
+    );
   }
 }
 

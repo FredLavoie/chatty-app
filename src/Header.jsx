@@ -9,7 +9,7 @@ class Header extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
 
-    )
+    );
   }
 }
 
