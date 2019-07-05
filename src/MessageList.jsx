@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+// import PropTypes from 'prop-types';
 import Message from './Message.jsx';
 import Notification from './Notification.jsx';
 
@@ -10,10 +11,8 @@ class MessageList extends Component {
 
   render() {
   const allMessages = this.props.messages.map((item, index) => {
-    console.log(item.type);
     switch (item.type) {
       case 'incomingMessage':
-        console.log('This worked');
         return <Message key={index} item={item} />;
       case 'incomingNotification':
         return <Notification oldUser={item.oldUser} key={index} item={item} />;
@@ -27,5 +26,10 @@ class MessageList extends Component {
     );
   }
 }
+
+// Doing type checking on the props
+// MessageList.propTypes = {
+//   messages: PropTypes.array,
+// };
 
 export default MessageList;

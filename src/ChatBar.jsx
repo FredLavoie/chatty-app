@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+// import PropTypes from 'prop-types';
 
 
 class ChatBar extends Component {
@@ -14,6 +15,14 @@ class ChatBar extends Component {
       </footer>
     );
   }
+
 }
+
+// Doing type checking on the props
+// ChatBar.propTypes = {
+//   updateUser: PropTypes.func,
+//   addNewMessage: PropTypes.func,
+//   user: PropTypes.string
+// };
 
 export default ChatBar;
