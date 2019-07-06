@@ -4,77 +4,56 @@ import MessageList from './MessageList.jsx';
 import Header from './Header.jsx';
 
 
+//******************************** App CLASS WITH METHODS **********************************/
+//******************************************************************************************/
 class App extends Component {
   constructor() {
     super();
     this.state = {
       currentUser: {name: 'Jimmy', online: false},
-      messages: [], // messages coming from the server will be stored here as they arrive
-      online: 55
+      messages: [], // messages from the server will be stored here as they arrive
+      online: 0
     };
-    this.SocketServer = new WebSocket('ws://localhost:3001'); // Creating the connection to the Socket Server
+    // Creating the connection to the Socket Server
+    this.SocketServer = new WebSocket('ws://localhost:3001');
   }
 
-  // // changing the online status in the state
-  // updateStatus = status => {
-  //   this.setState({
-  //     currentUser: {
-  //       // spreading currentUser object properties
-  //       ...this.state.currentUser,
-  //       // overwriting the online key value
-  //       online: status,
-  //     },
-  //   });
-  // };
-
-
-  handleOnOpen = (event) => {
-    console.log('Connection to server established.');
-
-    // // changing from offline to online
-    // this.updateStatus(true);
-  };
-
+  // send message history to user when window object is loaded
   componentDidMount() {
-    this.SocketServer.onopen = this.handleOnOpen; // not sure why I need this at the moment
-
-
     this.SocketServer.onmessage = (event) => {
       let serverMessage = JSON.parse(event.data);
 
-      if (typeof serverMessage == 'number') {
-        this.setState({ online: serverMessage });
+      if (typeof serverMessage.count == 'number') {
+        this.setState({ online: serverMessage.count });
       }
 
       let allTheMessages = [...this.state.messages,  serverMessage ];
       this.setState({ messages: allTheMessages });
-      
     };
-    
-
   }
 
-  // eslint-disable-next-line no-undef
+  // method to create message object and send to server to broadcast
+  // new message to all current users
   addNewMessage = event => {
     if(event.key === 'Enter') {
-      let newMessage = { type: 'incomingMessage', content: event.target.value, name:this.state.currentUser.name };
+      let newMessage = { 
+        type: 'incomingMessage',
+        content: event.target.value,
+        name:this.state.currentUser.name
+      };
       this.SocketServer.send(JSON.stringify(newMessage));
-      event.target.value = '';
+      event.target.value = ''; // reset form field to empty after submitting message
     }
   }
 
-  // eslint-disable-next-line no-undef
+  // method to update user name and assign 'Anonymous#' if left empty
+  // then send to sever to broadcast new notification to all current users
   updateUser = event => {
     let oldUser = this.state.currentUser.name;
     let newUser = event.target.value;
     let num = 1;
 
-    // TRY AND PREVENT UPDATE USER NOTIFICATION IF oldUser = newUser
-    // if(oldUser === newuser) {
-    // this.setState({ currentUser: {name: validUser, online: true}});      
-    // }
-
-
+    // validates name change and assigns 'Anonymous#' if left empty
     const validator = (userValidate, num) => {
       if (userValidate == '') {
         userValidate = 'Anonymous' + num;
@@ -86,6 +65,8 @@ class App extends Component {
 
           }
         }
+        // if user leaves the 'name' box empty, increments 
+        // the 'Anonymous' suffix to the next available number
       } else if(/Anonymous/.test(userValidate)) {
         for (let user of this.state.messages) {
           if (userValidate == user.name) {
@@ -95,21 +76,32 @@ class App extends Component {
             return userValidate;
           }
         }
-
       }
-
       return userValidate;
     };
     
+    // validate incoming user name change
     let validUser = validator(newUser, num);
 
-    let newMessage = { type: 'incomingNotification', content: validUser, oldUser: oldUser };
+    // create new notification object to send to server
+    let newMessage = { 
+      type: 'incomingNotification',
+      content: validUser,
+      oldUser: oldUser
+    };
     this.SocketServer.send(JSON.stringify(newMessage));
 
+    // set user input field to new user 
     event.target.value = validUser;
+
+    // set curerntUser state to the new user name
     this.setState({ currentUser: {name: validUser, online: true}});
   }
 
+  //**************************************** RENDER ******************************************/
+  //******************************************************************************************/
+
+  // Append all components of the page to 'container' class 
   render() {
     return (
       <div className="container">
@@ -124,4 +116,5 @@ class App extends Component {
     );
   }
 }
+
 export default App;

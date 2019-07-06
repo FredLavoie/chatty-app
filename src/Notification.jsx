@@ -7,14 +7,13 @@ class Notification extends Component {
   }
   
   render() {
-
     return (
       <div className="message-system">
         <span>{`${this.props.oldUser} changed their username to ${this.props.item.content}`}</span>
       </div>
     );
-
   }
+
 }
 
 export default Notification;
