@@ -8,7 +8,7 @@ The html content is rendered on the client side using the [ReactJS](https://reac
 The front-end JavaScript and html is written in the JSX file type and is later transpiled by [babel-loader](https://webpack.js.org/loaders/babel-loader/)/[babel](https://babeljs.io/) from ES6 to ES5. [webpack](https://webpack.js.org/) then assembles/bundles the SCSS and JSX files into JavaScript and CSS to be used by the client.
 
 ### Back-end:
-The back-end server is built using [node.js](https://nodejs.org) and [Express.js](https://expressjs.com/) - a node.js framework. The client-side app communicates with the server via the WebSockets communication protocol for multi-user, real-time comminication. WebSocket is what allows real-time communication to take place, client actions are sent to the server and the server broadcasts the incoming notifications and messages to all the active clients. This is possible due to the duplex (two-way) communication over a single TCP connection.
+The back-end server is built using [node.js](https://nodejs.org) and [Express.js](https://expressjs.com/) - a node.js framework. The client-side app communicates with the server via the WebSockets communication protocol for multi-user, real-time communication. WebSocket is what allows real-time communication to take place, client actions are sent to the server and the server broadcasts the incoming notifications and messages to all the active clients. This is possible due to the duplex (two-way) communication over a single TCP connection.
 
 ## Screenshot & video:
 
