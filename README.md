@@ -12,7 +12,7 @@ The back-end server is built using [node.js](https://nodejs.org) and [Express.js
 
 ## Screenshot & video:
 
-<img src="./pictures/screenshot-convo.png" width="800">
+<img src="./pictures/chatty-app.png" width="800">
 
 
 <img src="./pictures/short-demo.gif" width="800">
