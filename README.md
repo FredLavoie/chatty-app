@@ -30,8 +30,8 @@ In a new terminal window, navigate to ```/chatty_server``` and run the following
 
 These are the modules needed to run Chatty:
 
-- [node.js](https://nodejs.org)
 - [express](https://www.npmjs.com/package/express)
+- [react](https://www.npmjs.com/package/react)
 - [react-dom](https://www.npmjs.com/package/react-dom)
 - [uuid](https://www.npmjs.com/package/uuid)
 - [ws](https://www.npmjs.com/package/ws)
