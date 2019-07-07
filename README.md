@@ -22,24 +22,9 @@ The back-end server is built using [node.js](https://nodejs.org) and [Express.js
 
 In order to use  Chatty App, you must first clone the project to your local machine.
 
-Once the project is cloned, head over to your bash terminal and install the dependencies (listed below) using the following command:
+Once the project is cloned, head over to your bash terminal and install the dependencies using the following command:```npm install```. Once all the dependencies are installed, type the following command to get the server started: ```npm start```. You should see a message in terminal saying: ```Running at http://0.0.0.0:3000```.
 
-```
-npm install
-```
-
-Once all the dependencies are installed, type the following command to get the server started:
-
-```
-npm start
-```
-
-You should see a message in terminal saying:
-```
-Running at http://0.0.0.0:3000
-```
-
-Now head over to your web browser and navigate to <strong><localhost:3000></strong> and start chatting away!
+In a new terminal window, navigate to ```/chatty_server``` and run the following commands: ```npm install``` and then ```node server.js```. Now head over to your web browser and navigate to <strong><localhost:3000></strong> and start chatting away!
 
 ## Dependencies
 
